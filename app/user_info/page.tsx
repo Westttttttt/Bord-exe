@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import SignOutButton from "@/components/SignOutButton";
+import SignOutButton from "@/components/sign-out-button";
 
 export default async function UserInfo() {
     const session = await auth();

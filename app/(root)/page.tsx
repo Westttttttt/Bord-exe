@@ -1,6 +1,6 @@
 import { login } from "@/actions/auth";
 import { auth } from "@/auth";
-import SignInButton from "@/components/SignInButton";
+import SignInButton from "@/components/sign-in-button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
