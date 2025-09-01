@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { CgProfile } from "react-icons/cg";
 import ContinueWithGoogle from "./_components/continue-with-google-button";
+import ContinueAsGuest from "./_components/continue-as-guest";
 
 export default function AuthPage() {
     return (
@@ -24,10 +23,7 @@ export default function AuthPage() {
                     <ContinueWithGoogle />
 
                     {/* Guest login */}
-                    <Button className="bg-gray-800 text-white hover:bg-gray-700 border border-gray-700 flex items-center gap-2">
-                        <CgProfile className="text-lg" />
-                        Continue as Guest
-                    </Button>
+                    <ContinueAsGuest />
 
                     {/* Optional GitHub button */}
                     {/* 

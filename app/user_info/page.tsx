@@ -3,6 +3,7 @@ import SignOutButton from "@/components/sign-out-button";
 
 export default async function UserInfo() {
     const session = await auth();
+    console.log(session)
     if (!session) return <div>Please SignIn fucker</div>;
 
     return (
