@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import { dbConnect } from "@/lib/mongoose";
-import { User } from "@/models/User";
+import { IUser, User } from "@/models/User";
 
 export const {
     handlers: { GET, POST },
@@ -21,11 +21,21 @@ export const {
             const existing = await User.findOne({ email: user.email });
 
             if (!existing) {
-                await User.create({
-                    name: user.name,
+                await User.create<
+                    Pick<
+                        IUser,
+                        | "username"
+                        | "profileImage"
+                        | "provider"
+                        | "isGuest"
+                        | "email"
+                    >
+                >({
+                    username: user.name,
                     email: user.email,
-                    image: user.image,
+                    profileImage: user.image,
                     provider: account?.provider,
+                    isGuest: false,
                 });
             }
 

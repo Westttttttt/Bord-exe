@@ -1,9 +1,9 @@
 import { Schema, model, models, Document, Types } from "mongoose";
 
 export interface IUser extends Document {
-    name: string;
+    username: string;
     email?: string;
-    image?: string;
+    profileImage?: string;
     provider: "google" | "guest";
     isGuest: boolean;
     createdBoards: Types.ObjectId[];
@@ -14,7 +14,7 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
     {
-        name: {
+        username: {
             type: String,
             required: true,
             trim: true,
@@ -26,7 +26,7 @@ const userSchema = new Schema<IUser>(
             lowercase: true,
             trim: true,
         },
-        image: {
+        profileImage: {
             type: String,
         },
         provider: {
@@ -55,5 +55,14 @@ const userSchema = new Schema<IUser>(
     },
     { timestamps: true }
 );
+
+userSchema.pre("save", function (next) {
+    if (this.isGuest && !this.profileImage) {
+        // Use random string to make unique avatar
+        const randomSeed = Math.random().toString(36).substring(7);
+        this.profileImage = `https://robohash.org/${randomSeed}`;
+    }
+    next();
+});
 
 export const User = models.User<IUser> || model<IUser>("User", userSchema);
