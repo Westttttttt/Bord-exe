@@ -1,25 +1,25 @@
-import { login } from "@/actions/auth";
+import { currentLoginUser } from "@/actions/auth";
 import { auth } from "@/auth";
-import SignInButton from "@/components/sign-in-button";
+import Intro from "@/components/intro";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { BsPlus } from "react-icons/bs";
+import CreateNewBoard from "./_components/create-new-board";
 
 export default async function Home() {
-    const session = await auth();
+    const user = await currentLoginUser();
+    console.log(user);
 
-    if (session?.user) {
+    if (user) {
         return (
-            <div>
-                <Link href="/user_info">User Info</Link>
+            <div className="pt-4">
+                <div className="flex items-center justify-between">
+                    <h1 className="text-xl">Dashboard</h1>
+                    <CreateNewBoard/>
+                </div>
             </div>
         );
     }
 
-    return (
-        <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-            <p>Your are not signed in</p>
-            <SignInButton />
-            <Link href={"/auth"}>Go to auth</Link>
-        </div>
-    );
+    return <div>{!user && <Intro />}</div>;
 }

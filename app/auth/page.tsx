@@ -1,9 +1,9 @@
-import ContinueWithGoogle from "./_components/continue-with-google-button";
-import ContinueAsGuest from "./_components/continue-as-guest";
+import ContinueWithGoogle from "../../components/continue-with-google-button";
+import ContinueAsGuest from "../../components/continue-as-guest";
 
 export default function AuthPage() {
     return (
-        <div className="flex w-full min-h-screen items-center justify-center bg-neutral-950">
+        <div className="flex w-full min-h-screen items-center justify-center">
             <div className="w-[400px] p-8 rounded-2xl bg-neutral-900 shadow-lg flex flex-col gap-6">
                 <img
                     src="/croped-board-exe.png"

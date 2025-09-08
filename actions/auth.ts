@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { dbConnect } from "@/lib/mongoose";
 import { IUser, User } from "@/models/User";
 import { nanoid } from "nanoid";
@@ -74,7 +74,6 @@ export async function getCurrentUser() {
 
         const token = cookieStore.get("next-auth-session-token")?.value;
 
-        console.log(token);
         if (!token) {
             throw new Error("Unauthorized, Token is required");
         }
@@ -92,7 +91,7 @@ export async function getCurrentUser() {
         return user;
     } catch (error) {
         console.log("Something went wrong while getting the current user");
-        throw new Error("Error while getting the current user");
+        // throw new Error("Error while getting the current user");
     }
 }
 
@@ -106,4 +105,36 @@ export async function signOutGuestUser() {
             ? console.log("Error signout guest user", error.message)
             : console.log("Something went wrong signing out the guest user");
     }
+}
+
+export async function getUserByEmail(email: string) {
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        return user;
+    } catch (error) {
+        error instanceof Error
+            ? console.log("Error getting user by email", error.message)
+            : console.log("Something went wrong getting the user by email");
+    }
+}
+
+export async function currentLoginUser() {
+    let user = null;
+
+    const session = await auth();
+    if (session) {
+        user = await getUserByEmail(session.user?.email as string);
+        return user;
+    }
+    const guest = await getCurrentUser();
+    if (guest) {
+        user = guest;
+        return user;
+    }
+
+    return user;
 }

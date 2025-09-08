@@ -6,6 +6,7 @@ export interface IUser extends Document {
     profileImage?: string;
     provider: "google" | "guest";
     isGuest: boolean;
+    isFirstLogin: boolean;
     createdBoards: Types.ObjectId[];
     joinedBoards: Types.ObjectId[];
     createdAt: Date;
@@ -37,6 +38,9 @@ const userSchema = new Schema<IUser>(
         isGuest: {
             type: Boolean,
             default: false,
+        },
+        isFirstLogin: {
+            type: Boolean,
         },
         createdBoards: [
             {

@@ -5,7 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 
-export default function ContinueAsGuest() {
+export default function ContinueAsGuest({
+    content = "Continue as Guest",
+}: {
+    content?: string;
+}) {
     const router = useRouter();
 
     async function handleSignin() {
@@ -21,7 +25,7 @@ export default function ContinueAsGuest() {
             onClick={handleSignin}
         >
             <CgProfile className="text-lg" />
-            Continue as Guest
+            {content}
         </Button>
     );
 }
